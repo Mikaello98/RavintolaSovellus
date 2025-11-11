@@ -1,20 +1,12 @@
-const express = require('express');
+import express from 'express';
+import { getMenuItems, getMenuItem, createMenuItem, updateMenuItem, deleteMenuItem } from '../controllers/menuController.js';
+
 const router = express.Router();
-const MenuItem = require('../models/menuItems');
 
-//GET all menu items for a restaurant: /api/menuItems?restaurantId=12345
-router.get('/', async (req, res) => {
-  const { restaurantId } = req.query;
-  const filter = restaurantId ? { restaurant: restaurantId } : {};
-  const menuItems = await MenuItem.find(filter);
-  res.json(menuItems);
-});
+router.get('/', getMenuItems);
+router.get('/:id', getMenuItem);
+router.post('/', createMenuItem);
+router.put('/:id', updateMenuItem);
+router.delete('/:id', deleteMenuItem);
 
-//GET a specific menu item by ID: /api/menuItems/:id
-router.get('/:id', async (req, res) => {
-  const menuItem = await MenuItem.findById(req.params.id);
-  if (!menuItem) return res.status(404).json({ message: 'Menu item not found' });
-  res.json(menuItem);
-});
-
-module.exports = router;
+export default router;
