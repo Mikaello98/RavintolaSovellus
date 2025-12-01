@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import restaurantRoutes from './routes/restaurant.js';
-import menuRoutes from './routes/menu.js';
-import orderRoutes from './routes/order.js';
+import restaurantRoutes from './routes/restaurantRoutes.js';
+import menuRoutes from './routes/menuRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 dotenv.config();
 const app = express();

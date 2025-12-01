@@ -1,40 +1,74 @@
 import { useCart, useCartDispatch } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
-import api from "../api/api";
+import { useState } from "react";
 
 export default function Checkout() {
   const { items } = useCart();
   const dispatch = useCartDispatch();
   const navigate = useNavigate();
 
-  const totalPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
+  const [form, setForm] = useState({
+    customerName: '',
+    customerAddress: '',
+    customerPhone: '',
+  });
 
-  const handlePlaceOrder = async () => {
-    try {
-      const orderData = { items, totalPrice };
-      await api.post("/orders", orderData);
-      dispatch({ type: "CLEAR_CART" });
-      alert("Tilaus onnistui!");
-      navigate("/");
-    }
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    catch (error) {
-      console.error("Tilaus epäonnistui:", error);
-      alert("Tilaus epäonnistui. Yritä uudelleen.");
-    }
+  const handleSubmit = async () => {
+    e.preventDefault();
+      const orderData = { 
+        items,
+        restaurantId: items[0]?.restaurantId,
+        total,
+        ...form,
+       };
 
-  };
+      const res = await fetch('http://localhost:5000/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData),
+      });
+
+      const data = await res.json
+
+      if (data.success) {
+        dispatch({ type: 'CLEAR_CART' });
+        navigate(`/checkout/success/${data.orderId}`);
+      }
+    };
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Tilaus</h1>
-      <p>Yhteensä: {totalPrice.toFixed(2)} €</p>
-      <button
-        onClick={handlePlaceOrder}
-        className="bg-green-600 text-white px-4 py-2 rounded mt-2"
-      >
-        Lähetä tilaus
-      </button>
+    <div className="max-w-1g mx-auto py-6">
+      <h1 className="text-2xl font-bold mb-4">Kassalle</h1>
+
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <input
+          className="border p-2"
+          placeholder="Nimesi"
+          value={form.customerName}
+          onChange={(e) => setForm({ ...form, customerName: e.target.value })}
+          required
+        />
+        <input
+          className="border p-2"
+          placeholder="Osoitteesi"
+          value={form.customerAddress}
+          onChange={(e) => setForm({ ...form, customerAddress: e.target.value })}
+          required
+        />
+        <input
+          className="border p-2"
+          placeholder="Puhelinnumerosi"
+          value={form.customerPhone}
+          onChange={(e) => setForm({ ...form, customerPhone: e.target.value })}
+          required
+        />
+
+        <Button className='bg-blue-600 text-white p-2 rounded'>
+          Vahvista tilaus (${total.toFixed(2)})
+        </Button>
+      </form>
     </div>
   );
 }
