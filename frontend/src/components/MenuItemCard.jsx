@@ -1,4 +1,4 @@
-import { useCartDispatch } from '../context/cartContext';
+import { useCartDispatch } from '../context/CartContext';
 
 export default function MenuItemCard({ item }) {
   const dispatch = useCartDispatch();

@@ -6,8 +6,6 @@ const CartDispatchContext = createContext();
 const initialState = { items: [] };
 
 function cartReducer(state, action) {
-  let newState;
-  
   switch (action.type) {
     case 'ADD_ITEM': {
       console.log('Adding item:', action.payload);
@@ -18,11 +16,15 @@ function cartReducer(state, action) {
         return {
           ...state,
           items: state.items.map(i =>
-            i._id === item._id ? { ...i, quantity: i.quantity + item.quantity } : i
+            i._id === item._id 
+              ? { ...i, quantity: i.quantity + 1 } 
+              : i
           ),
         };
       }
-      return { ...state, items: [...state.items, item] };
+      return { 
+        ...state, 
+        items: [...state.items, { ...item, quantity: 1 }] };
     }
 
     case 'REMOVE_ITEM':
@@ -32,12 +34,14 @@ function cartReducer(state, action) {
       return {
         ...state,
         items: state.items.map(i =>
-          i._id === action.payload._id ? { ...i, quantity: action.payload.quantity } : i
+          i._id === action.payload._id 
+          ? { ...i, quantity: action.payload.quantity } 
+          : i
         ),
       };
 
     case 'CLEAR_CART':
-      return initialState;
+      return { items: []};
 
     default:
       throw new Error('Unknown action: ' + action.type);

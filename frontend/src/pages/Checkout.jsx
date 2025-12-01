@@ -1,4 +1,4 @@
-import { useCart, useCartDispatch } from "../context/cartContext";
+import { useCart, useCartDispatch } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 
