@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import { createContext, useReducer, useContext } from 'react';
 
 const CartContext = createContext();
 const CartDispatchContext = createContext();
@@ -6,8 +6,12 @@ const CartDispatchContext = createContext();
 const initialState = { items: [] };
 
 function cartReducer(state, action) {
+  let newState;
+  
   switch (action.type) {
     case 'ADD_ITEM': {
+      console.log('Adding item:', action.payload);
+      console.log('Existing items:', state.items);
       const item = action.payload;
       const existingItem = state.items.find(i => i._id === item._id);
       if (existingItem) {

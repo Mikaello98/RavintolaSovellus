@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCartDispatch } from '../context/cartContext';
 
 export default function MenuItemCard({ item }) {
@@ -10,6 +9,8 @@ export default function MenuItemCard({ item }) {
       payload: { ...item, quantity: 1 },
     });
   };
+  console.log(item);
+
 
   return (
     <div className="border rounded-2xl shadow-sm hover:shadow-md transition p-4 flex flex-col justify-between">

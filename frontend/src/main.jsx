@@ -6,11 +6,11 @@ import App from './App.jsx';
 import { CartProvider } from './context/cartContext.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
-      <CartProvider>
+  
+    <CartProvider>
+      <BrowserRouter>
         <App />
-      </CartProvider>
-    </BrowserRouter>
-  </StrictMode>,
+      </BrowserRouter>
+    </CartProvider>
+ 
 );
