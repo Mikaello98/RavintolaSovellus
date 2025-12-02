@@ -13,24 +13,22 @@ export default function Checkout() {
     customerPhone: '',
   });
 
+  if (items.length === 0) return <p>Ostoskori on tyhjä</p>
+
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
       const orderData = { 
         items,
-        restaurantId: items[0]?.restaurantId,
+        restaurantId: items[0]?.restaurant,
         total,
         ...form,
        };
 
-      const res = await fetch('http://localhost:5000/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData),
-      });
+      const res = await api.post('/orders', orderData);
 
-      const data = await res.json
+      const data = await res.json();
 
       if (data.success) {
         dispatch({ type: 'CLEAR_CART' });
@@ -39,7 +37,7 @@ export default function Checkout() {
     };
 
   return (
-    <div className="max-w-1g mx-auto py-6">
+    <div className="max-w-lg mx-auto py-6">
       <h1 className="text-2xl font-bold mb-4">Kassalle</h1>
 
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
@@ -65,9 +63,9 @@ export default function Checkout() {
           required
         />
 
-        <Button className='bg-blue-600 text-white p-2 rounded'>
+        <button className='bg-blue-600 text-white p-2 rounded'>
           Vahvista tilaus (${total.toFixed(2)})
-        </Button>
+        </button>
       </form>
     </div>
   );

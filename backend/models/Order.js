@@ -3,21 +3,17 @@ import mongoose from 'mongoose';
 const OrderSchema = new mongoose.Schema({
   items: [
     {
-      _id: String,
-      name: String,
-      price, Number,
-      quantity: Number,
+      _id: { type: String, required: true },
+      name: { type: String, required: true },
+      price: { type: Number, required: true, min: 0 },
+      quantity: { type: Number, required: true, min: 1 },
     }
   ],
-  restaurantId: String,
-  total: Number,
-  customerName: String,
-  customerAddress: String,
-  customerPhone: String,
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-});
+  restaurantId: { type: String },
+  total: { type: Number, required: true, min: 0 },
+  customerName: { type: String },
+  customerAddress: { type: String },
+  customerPhone: { type: String },
+}, { timestamps: true });
 
 export default mongoose.model('Order', OrderSchema);

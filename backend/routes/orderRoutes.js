@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
 
     res.json({ success: true, orderId: newOrder._id });
   } catch (err) {
-    console.error('ORder creation error:', err);
+    console.error('Order creation error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
