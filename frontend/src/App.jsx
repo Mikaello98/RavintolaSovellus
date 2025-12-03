@@ -13,6 +13,8 @@ export default function App() {
       <main className="max-w-5xl mx-auto px-4">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route path="/restaurant/:id" element={<Restaurant />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

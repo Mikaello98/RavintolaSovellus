@@ -36,15 +36,17 @@ const menuData = [
 
 async function seedDatabase() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
+    if (!uri) throw new Error('Missing MONGODB_URI env var');
+    await mongoose.connect(uri);
     console.log('Connected to MongoDB');
 
     await Restaurant.deleteMany({});
     await MenuItem.deleteMany({});
     console.log('Cleared existing data');
 
-    const restaurants = await Restaurant.insertMany(restaurantsData);
-    console.log('Restaurants added:', restaurants.length);
+    const restaurants = await Restaurant.insertMany(restaurantsData)
+    console.log('Restaurants added:', restaurants.length)
 
     const menuItems = menuData.map((item) => {
       const restaurant = restaurants.find((r) => r.name === item.restaurantName);
@@ -58,12 +60,10 @@ async function seedDatabase() {
     });
 
     await MenuItem.insertMany(menuItems);
-    console.log('Menu items added:', menuItems.length);
-
-    console.log('Database seeding completed');
+    console.log('Seed completed');
     process.exit();
-  } catch (error) {
-    console.error('Error seeding database:', error);
+  } catch (err) {
+    console.error('Seed error:', err);
     process.exit(1);
   }
 }
