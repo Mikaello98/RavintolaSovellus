@@ -1,6 +1,14 @@
 import { useCart, useCartDispatch } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useApi } from "../utils/api";
+
+const { apiFetch } = useApi();
+
+apiFetch('/api/orders', {
+  method: 'POST',
+  body: JSON.stringify(orderData),
+});
 
 export default function Checkout() {
   const { items } = useCart();

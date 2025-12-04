@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../api/api';
+import api from '../utils/api';
 import RestaurantCard from '../components/RestaurantCard';
 
 export default function Home() {
