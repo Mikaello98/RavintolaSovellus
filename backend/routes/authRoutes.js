@@ -1,12 +1,13 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
+    console.log('Incoming register:', req.body);
     const { name, email, password } = req.body;
 
     const existing = await User.findOne({ email });
@@ -51,6 +52,7 @@ router.post('/login', async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role,
       }
     });
 

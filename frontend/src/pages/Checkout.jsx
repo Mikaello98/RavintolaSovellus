@@ -1,14 +1,7 @@
 import { useCart, useCartDispatch } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useApi } from "../utils/api";
 
-const { apiFetch } = useApi();
-
-apiFetch('/api/orders', {
-  method: 'POST',
-  body: JSON.stringify(orderData),
-});
 
 export default function Checkout() {
   const { items } = useCart();
@@ -36,11 +29,9 @@ export default function Checkout() {
 
       const res = await api.post('/orders', orderData);
 
-      const data = await res.json();
-
-      if (data.success) {
+      if (res.data.success) {
         dispatch({ type: 'CLEAR_CART' });
-        navigate(`/checkout/success/${data.orderId}`);
+        navigate(`/checkout/success/${res.data.orderId}`);
       }
     };
 

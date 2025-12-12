@@ -10,7 +10,7 @@ export const getRestaurants = async (req, res) => {
   }
 };
 
-export const getRestaurant = async (req, res) => {
+export const getRestaurantById = async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.id).lean();
     if (!restaurant) return res.status(404).json({ message: 'Restaurant not found' });

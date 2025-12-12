@@ -44,7 +44,7 @@ export default function AdminMenuItems() {
             <div className="flex gap-2 items-center">
               <div>{it.price.toFixed(2)} €</div>
               <Link to={`/admin/restaurants/${restaurantId}/menu/${it._id}/edit`} className="text-yellow-600">Edit</Link>
-              <button onClick={() => handleDelete(it_id)} className="text-red-600">Delete</button>
+              <button onClick={() => handleDelete(it._id)} className="text-red-600">Delete</button>
             </div>
           </div>
         ))}

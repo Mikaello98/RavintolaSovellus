@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-const AuthContext = createContext();
-const AuthDispatchContext = createContext();
+const AuthContext = createContext(null);
+const AuthDispatchContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (userData) => {
-    localStorage.getItem('user', JSON.stringify(userData));
+    localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
   };
 

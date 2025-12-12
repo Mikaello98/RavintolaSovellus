@@ -50,21 +50,21 @@ export default function Register() {
       <form onSubmit={handleSubmit} className="space-y-3">
         <input 
           name="name"
-          placeholder="Name"
+          placeholder="Nimi"
           className="border p-2 w-full"
           onChange={handleChange}
           required 
         />
         <input 
           name="email"
-          placeholder="Email"
+          placeholder="Sähköposti"
           className="border p-2 w-full"
           onChange={handleChange}
           required 
         />
         <input 
           name="password"
-          placeholder="Password"
+          placeholder="Salasana"
           type="password"
           className="border p-2 w-full"
           onChange={handleChange}

@@ -2,10 +2,14 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';
+
 import restaurantRoutes from './routes/restaurantRoutes.js';
 import menuRoutes from './routes/menuRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+
+import auth from './middleware/auth.js';
+import admin from './middleware/admin.js';
 
 dotenv.config();
 
@@ -14,9 +18,15 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+
 app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/menu', menuRoutes);
-app.use('/api/orders', orderRoutes);
+
+app.use('/api/orders', auth, orderRoutes);
+
+app.use('/api/admin/restaurants', auth, admin, restaurantRoutes);
+app.use('/api/admin/menu', auth, admin, menuRoutes);
+app.use('/api/admin/orders', auth, admin, orderRoutes);
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 

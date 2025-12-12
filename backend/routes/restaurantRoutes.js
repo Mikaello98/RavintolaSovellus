@@ -1,18 +1,19 @@
 import express from 'express';
 import { 
   getRestaurants, 
-  getRestaurant, 
+  getRestaurantById, 
   createRestaurant, 
   updateRestaurant, 
   deleteRestaurant 
 } from '../controllers/restaurantController.js';
+
 import auth from '../middleware/auth.js';
 import admin from '../middleware/admin.js';
 
 const router = express.Router();
 
 router.get('/', getRestaurants);
-router.get('/:id', getRestaurant);
+router.get('/:id', getRestaurantById);
 
 router.post('/', auth, admin, createRestaurant);
 router.put('/:id', auth, admin, updateRestaurant);
